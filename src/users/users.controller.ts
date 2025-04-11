@@ -46,7 +46,7 @@ export class UsersController {
     @ApiOperation({ summary: 'Create a new admin user data' })
     @ApiBody({ type: CreateUserDTO })
     @ApiCreatedResponse({ description: 'Create admin user success' })
-    @ApiExcludeEndpoint()
+    // @ApiExcludeEndpoint() // Exclude this endpoint from Swagger documentation
     async createAdmin(@Body() data: CreateUserDTO) {
         return this.usersService.createAdminAccount(data);
     }
