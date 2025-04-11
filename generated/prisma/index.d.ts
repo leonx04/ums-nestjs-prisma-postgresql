@@ -25,7 +25,8 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 export namespace $Enums {
   export const Role: {
   USER: 'USER',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  SUPERADMIN: 'SUPERADMIN'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]

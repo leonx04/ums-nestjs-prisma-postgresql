@@ -141,7 +141,8 @@ exports.Prisma.QueryMode = {
 };
 exports.Role = exports.$Enums.Role = {
   USER: 'USER',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  SUPERADMIN: 'SUPERADMIN'
 };
 
 exports.Prisma.ModelName = {

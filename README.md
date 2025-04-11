@@ -51,6 +51,13 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+# run dev 
+$ npm run start:dev
+
+# open live
+http://localhost:3000
+  
 ```
 
 ## Deployment
