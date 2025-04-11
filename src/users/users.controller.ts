@@ -1,13 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
-import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiExcludeEndpoint, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('Users')
 @ApiBearerAuth()
 @Controller('users')
 @UseGuards(JwtAuthGuard)
+@ApiResponse({status: 401, description: 'Unauthorized'})
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
     @Get()
@@ -45,6 +46,7 @@ export class UsersController {
     @ApiOperation({ summary: 'Create a new admin user data' })
     @ApiBody({ type: CreateUserDTO })
     @ApiCreatedResponse({ description: 'Create admin user success' })
+    @ApiExcludeEndpoint()
     async createAdmin(@Body() data: CreateUserDTO) {
         return this.usersService.createAdminAccount(data);
     }
@@ -53,8 +55,13 @@ export class UsersController {
     @ApiOperation({ summary: 'Update user data by id' })
     @ApiParam({ name: 'id', type: 'string' })
     @ApiResponse({ status: 200, description: 'Update user success' })
+    @ApiResponse({ status: 404, description: 'User not found' })
     @ApiBody({ type: UpdateUserDTO })
     async update(@Param('id') id: string, @Body() data: UpdateUserDTO) {
+        const user = await this.usersService.findOne(+id);
+        if (!user) {
+            throw new UnauthorizedException('User not found');
+        }
         return this.usersService.update(+id, data);
     }
 

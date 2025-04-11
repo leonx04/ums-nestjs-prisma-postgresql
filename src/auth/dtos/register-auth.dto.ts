@@ -5,7 +5,7 @@ export class RegisterAuthDto {
     @IsNotEmpty()
     @ApiProperty({ description: 'User name' })
     name: string;
-    @IsEmail()
+    @IsEmail({}, { message: 'Invalid email format' })
     @IsNotEmpty()
     @ApiProperty({ description: 'User email address' })
     email: string;

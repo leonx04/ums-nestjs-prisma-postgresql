@@ -10,6 +10,14 @@ export class AuthService {
     constructor(private prisma: PrismaService, private jwtService: JwtService) { }
 
     async register(dtoRegister: RegisterAuthDto) {
+        const existingUser = await this.prisma.user.findUnique({ where: { email: dtoRegister.email } });
+        if (existingUser) {
+            throw new Error('Email already registered');
+        }
+        const existingPhone = await this.prisma.user.findUnique({ where: { phone: dtoRegister.phone } });
+        if (existingPhone) {
+            throw new Error('Phone already registered');
+        }
         dtoRegister.password = await bcrypt.hash(dtoRegister.password, 10);
         const user = await this.prisma.user.create({
             data: {
@@ -37,5 +45,7 @@ export class AuthService {
         const token = this.jwtService.sign(payload);
         return { access_token: token };
     }
+
+    
 
 }
