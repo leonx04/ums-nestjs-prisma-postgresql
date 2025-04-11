@@ -25,10 +25,31 @@ model User {
   role      Role     @default(USER)
   createAt  DateTime @default(now())
   updateAt  DateTime @updatedAt
+  projects  Project[]
 }
 
 enum Role {
   USER
   ADMIN
   SUPERADMIN
+}
+
+enum Status {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+  status      Status   @default(PENDING)
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
 }

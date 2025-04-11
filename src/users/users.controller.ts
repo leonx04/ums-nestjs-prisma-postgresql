@@ -12,6 +12,7 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
     @Get()
     @ApiOperation({ summary: 'Get all users' })
+    @ApiResponse({ status: 200, description: 'Get all users success' })
     index() {
         return this.usersService.findAll();
     }

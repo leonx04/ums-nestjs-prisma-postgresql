@@ -130,6 +130,18 @@ exports.Prisma.UserScalarFieldEnum = {
   updateAt: 'updateAt'
 };
 
+exports.Prisma.ProjectScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  status: 'status',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -145,8 +157,16 @@ exports.Role = exports.$Enums.Role = {
   SUPERADMIN: 'SUPERADMIN'
 };
 
+exports.Status = exports.$Enums.Status = {
+  PENDING: 'PENDING',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Project: 'Project'
 };
 
 /**

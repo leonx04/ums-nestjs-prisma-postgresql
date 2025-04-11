@@ -28,6 +28,11 @@ export class AuthService {
             throw new Error('Invalid credentials');
         }
 
+        const isPasswordValid = await bcrypt.compare(dtoLogin.password, user.password);
+        if (!isPasswordValid) {
+            throw new Error('Invalid account or password');
+        }
+
         const payload = { sub: user.id, email: user.email };
         const token = this.jwtService.sign(payload);
         return { access_token: token };
